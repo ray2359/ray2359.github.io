@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head><title>Speed Tester</title></head>
+  <body>
+    <h1>Computer Speed Tester <span style="font-size: 16px;"> 8 Feb 2022</span></h1>
+    <p>Press the button to calculate how long it takes for your computer to calculate the first 40,000 digits of pi.</p>
+    <p>(takes about 5 seconds)</p>
+    <p id="text">???s taken</p>
+    <p id="avg">Average time taken: ??s</p>
+    <p id="times">Times tested: 0</p>
+    <button onclick="mainFunction()">Test</button>
+    <br>
+    <br>
+    <div style="word-wrap: break-word;" id="pie"></div>
+    <script>
+
+let totalTime = 0;
+let numberOfTests = 0;
+
+function mainFunction () {
+  let startTime = Date.now();
+  let i = 1n;
+  let x = 3n * (10n ** 40020n);
+  let pi = x;
+  while (x > 0) {
+    x = x * i / ((i + 1n) * 4n);
+    pi += x / (i + 2n);
+    i += 2n;
+  }
+  pi = pi/(10n**20n);
+  pi = pi.toString();
+  let y = ".";
+  pi = [pi.slice(0, 1), y, pi.slice(1)].join('');
+  document.getElementById("pie").innerHTML = pi;
+  let endTime = Date.now();
+  let timeTaken = (endTime - startTime)/1000;
+  totalTime += timeTaken;
+  numberOfTests++;
+  let avgTime = Math.round((totalTime/numberOfTests)*1000)/1000;
+  document.getElementById("text").innerHTML = `${timeTaken}s`
+  document.getElementById("times").innerHTML = `Times tested: ${numberOfTests}`
+  document.getElementById("avg").innerHTML = `Average time taken: ${avgTime}s`
+  document.getElementById("pie").innerHTML = pi;
+}
+    </script>
+  </body>
+</html>
